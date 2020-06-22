@@ -22,4 +22,4 @@ jobs:
         run: npm install --global surge
 
       - name: Run surge
-        run: surge ./build expense-tracker-react_yasirrais111.surge.sh --token ${{ secrets.SURGE_TOKEN }}
+        run: surge ./build hello_react_yasirrais111.surge.sh --token ${{ secrets.SURGE_TOKEN }}
