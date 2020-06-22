@@ -1,11 +1,5 @@
-# This workflow will do a clean install of node dependencies, build the source code and run tests across different versions of node
-# For more information see: https://help.github.com/actions/language-and-framework-guides/using-nodejs-with-github-actions
-
-name: Deploy React App on Surge
-
-on:
-  push:
-
+name: Deploy Surge Website
+on: [push]
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -16,13 +10,16 @@ jobs:
         uses: actions/setup-node@v2-beta
         with:
           node-version: 12
-      - name: Prepare for Yarn Installation
-        run: curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add - echo "deb https://dl.yarnpkg.com/debian/ stable main" | sudo tee /etc/apt/sources.list.d/yarn.list
-      - name: install yarn
-        run: sudo apt update && sudo apt install yarn
+
+      - uses: borales/actions-yarn@v2.0.0 # `yarn install`
+        with:
+          cmd: install
+
       - name: Build React App
         run: yarn build
+
       - name: Install Surge
-        run: npm install -g surge
+        run: npm install --global surge
+
       - name: Run surge
-        run: surge ./build hello_react_yasirrais111.surge.sh --token ${{ secrets.SURGE_TOKEN }}
+        run: surge ./build expense-tracker-react_yasirrais111.surge.sh --token ${{ secrets.SURGE_TOKEN }}
